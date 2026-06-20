@@ -1,1 +1,250 @@
-# Class-12th-3rd-Sem-History-Code-1-
+# Class-12th-3rd-Sem-History-Code-1-<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Test Bazar — ইতিহাস | ইতিহাসের ধারণা — ১.১ আধুনিক ইতিহাসচর্চার বৈচিত্র্য | Set 1</title>
+<link href="https://fonts.googleapis.com/css2?family=Tiro+Bangla&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Syne',sans-serif;background:#f0faf4;min-height:100vh;color:#1c2e24}
+.top-bar{background:#1a7a4a;padding:0.8rem 1.5rem;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100}
+.top-logo{font-size:1.1rem;font-weight:800;color:white}.top-logo span{color:#f9a825}
+.timer-box{background:rgba(255,255,255,0.15);border-radius:8px;padding:0.4rem 1rem;display:flex;align-items:center;gap:6px;font-size:1rem;font-weight:700;color:white}
+.timer-box.danger{background:#dc3545}
+.main{max-width:720px;margin:0 auto;padding:1.5rem 1rem}
+.quiz-info{background:white;border-radius:12px;padding:1rem 1.2rem;margin-bottom:1.2rem;border:1px solid #c5dccb;display:flex;gap:1rem;flex-wrap:wrap}
+.info-item{font-family:'Tiro Bangla',serif;font-size:0.85rem;color:#5a7a66}
+.info-item strong{color:#1a7a4a}
+.progress-wrap{background:#c5dccb;border-radius:4px;height:6px;margin-bottom:1.2rem;overflow:hidden}
+.progress-fill{height:100%;background:#1a7a4a;border-radius:4px;transition:width 0.3s}
+.q-card{background:white;border-radius:14px;padding:1.4rem;margin-bottom:1rem;border:1px solid #c5dccb;box-shadow:0 2px 10px rgba(26,122,74,0.06)}
+.q-num{font-size:0.75rem;font-weight:700;color:#e8730a;letter-spacing:1px;text-transform:uppercase;margin-bottom:0.6rem}
+.q-text{font-family:'Tiro Bangla',serif;font-size:1rem;color:#1c2e24;line-height:1.7;margin-bottom:1.1rem}
+.opts{display:flex;flex-direction:column;gap:0.6rem}
+.opt{display:flex;align-items:flex-start;gap:10px;padding:0.7rem 1rem;border:1.5px solid #c5dccb;border-radius:10px;cursor:pointer;transition:all 0.15s;background:white;text-align:left}
+.opt:hover:not(.disabled){border-color:#1a7a4a;background:#f0faf4}
+.opt-circle{min-width:28px;height:28px;border-radius:50%;border:1.5px solid #c5dccb;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#5a7a66;flex-shrink:0;transition:all 0.15s}
+.opt-text{font-family:'Tiro Bangla',serif;font-size:0.92rem;color:#1c2e24;line-height:1.6;padding-top:2px}
+.opt.correct{border-color:#1a7a4a;background:#e8f7ef}
+.opt.correct .opt-circle{background:#1a7a4a;border-color:#1a7a4a;color:white}
+.opt.wrong{border-color:#dc3545;background:#fdf0f0}
+.opt.wrong .opt-circle{background:#dc3545;border-color:#dc3545;color:white}
+.opt.disabled{cursor:default}
+.explanation{background:#f0faf4;border-left:3px solid #1a7a4a;border-radius:0 8px 8px 0;padding:0.8rem 1rem;margin-top:0.8rem;display:none}
+.explanation.show{display:block}
+.explanation p{font-family:'Tiro Bangla',serif;font-size:0.88rem;color:#2c4035;line-height:1.7}
+.explanation strong{color:#1a7a4a}
+.nav-row{display:flex;justify-content:space-between;align-items:center;margin-top:0.8rem}
+.score-show{font-family:'Tiro Bangla',serif;font-size:0.85rem;color:#5a7a66}
+.next-btn{background:#1a7a4a;color:white;border:none;padding:0.6rem 1.4rem;border-radius:8px;font-family:'Tiro Bangla',serif;font-size:0.9rem;cursor:pointer;transition:all 0.15s}
+.next-btn:hover{background:#2aad68}
+.next-btn:disabled{background:#c5dccb;cursor:default}
+.result-wrap{background:white;border-radius:14px;padding:2rem;text-align:center;border:1px solid #c5dccb;display:none}
+.result-wrap.show{display:block}
+.result-icon{font-size:3rem;margin-bottom:0.5rem}
+.result-score{font-size:3.5rem;font-weight:800;color:#1a7a4a}
+.result-total{font-size:1rem;color:#5a7a66;margin-bottom:0.5rem;font-family:'Tiro Bangla',serif}
+.result-grade{font-size:1.2rem;font-weight:600;color:#1c2e24;margin-bottom:1.5rem;font-family:'Tiro Bangla',serif}
+.result-bars{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.8rem;margin-bottom:1.5rem}
+.result-bar{background:#f0faf4;border-radius:10px;padding:0.8rem;text-align:center}
+.rb-num{font-size:1.4rem;font-weight:800}
+.rb-label{font-family:'Tiro Bangla',serif;font-size:0.8rem;color:#5a7a66;margin-top:0.2rem}
+.retry-btn{background:#1a7a4a;color:white;border:none;padding:0.75rem 2rem;border-radius:8px;font-family:'Tiro Bangla',serif;font-size:1rem;cursor:pointer;margin-right:0.5rem}
+.review-btn{background:white;color:#1a7a4a;border:1.5px solid #1a7a4a;padding:0.75rem 2rem;border-radius:8px;font-family:'Tiro Bangla',serif;font-size:1rem;cursor:pointer}
+.back-btn{background:white;color:#5a7a66;border:1.5px solid #c5dccb;padding:0.75rem 2rem;border-radius:8px;font-family:'Tiro Bangla',serif;font-size:1rem;cursor:pointer;margin-top:0.6rem}
+.start-wrap{background:white;border-radius:14px;padding:2rem;text-align:center;border:1px solid #c5dccb}
+.start-wrap h2{font-family:'Tiro Bangla',serif;font-size:1.4rem;color:#1c2e24;margin-bottom:0.5rem}
+.start-wrap p{font-family:'Tiro Bangla',serif;font-size:0.9rem;color:#5a7a66;line-height:1.7;margin-bottom:1.2rem}
+.start-info{display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;margin-bottom:1.5rem}
+.si{background:#f0faf4;border-radius:10px;padding:0.8rem;text-align:center}
+.si-num{font-size:1.4rem;font-weight:800;color:#1a7a4a}
+.si-label{font-family:'Tiro Bangla',serif;font-size:0.8rem;color:#5a7a66}
+.start-btn{background:#1a7a4a;color:white;border:none;padding:0.85rem 2.5rem;border-radius:10px;font-family:'Tiro Bangla',serif;font-size:1.05rem;cursor:pointer;box-shadow:0 4px 15px rgba(26,122,74,0.3)}
+.start-btn:hover{background:#2aad68}
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div class="top-logo">Test <span>Bazar</span></div>
+  <div class="timer-box" id="timerBox">⏱ <span id="timerDisplay">20:00</span></div>
+</div>
+
+<div class="main">
+
+  <div class="start-wrap" id="startScreen">
+    <div style="font-size:2.5rem;margin-bottom:0.8rem">📜</div>
+    <h2>ইতিহাস — Chapter 1</h2>
+    <p>ইতিহাসের ধারণা — ১.১ আধুনিক ইতিহাসচর্চার বৈচিত্র্য<br>Set 1 — নতুন সামাজিক ইতিহাস, খেলা ও খাদ্যাভ্যাসের ইতিহাস</p>
+    <div class="start-info">
+      <div class="si"><div class="si-num">১৫</div><div class="si-label">প্রশ্ন</div></div>
+      <div class="si"><div class="si-num">২০</div><div class="si-label">মিনিট</div></div>
+      <div class="si"><div class="si-num">১৫</div><div class="si-label">পূর্ণমান</div></div>
+      <div class="si"><div class="si-num">MCQ</div><div class="si-label">ধরন</div></div>
+    </div>
+    <button class="start-btn" onclick="startQuiz()">Test শুরু করো →</button>
+  </div>
+
+  <div id="quizArea" style="display:none">
+    <div class="quiz-info">
+      <div class="info-item">📜 <strong>ইতিহাস</strong> — ইতিহাসের ধারণা — ১.১ আধুনিক ইতিহাসচর্চার বৈচিত্র্য</div>
+      <div class="info-item">📝 Set 1 | Class 10</div>
+    </div>
+    <div class="progress-wrap"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+    <div class="q-card" id="qCard">
+      <div class="q-num" id="qNum">প্রশ্ন ১ / ১৫</div>
+      <div class="q-text" id="qText"></div>
+      <div class="opts" id="qOpts"></div>
+      <div class="explanation" id="explanation"><p id="explanationText"></p></div>
+      <div class="nav-row">
+        <div class="score-show" id="scoreShow">সঠিক: ০ | ভুল: ০</div>
+        <button class="next-btn" id="nextBtn" onclick="nextQ()" disabled>পরবর্তী →</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="result-wrap" id="resultWrap">
+    <div class="result-icon" id="resultIcon"></div>
+    <div class="result-score" id="finalScore"></div>
+    <div class="result-total">/ ১৫</div>
+    <div class="result-grade" id="resultGrade"></div>
+    <div class="result-bars">
+      <div class="result-bar"><div class="rb-num" id="rbCorrect" style="color:#1a7a4a"></div><div class="rb-label">সঠিক</div></div>
+      <div class="result-bar"><div class="rb-num" id="rbWrong" style="color:#dc3545"></div><div class="rb-label">ভুল</div></div>
+      <div class="result-bar"><div class="rb-num" id="rbPct" style="color:#e8730a"></div><div class="rb-label">স্কোর</div></div>
+    </div>
+    <button class="retry-btn" onclick="startQuiz()">আবার চেষ্টা করো</button>
+    <button class="review-btn" onclick="showReview()">উত্তর দেখো</button>
+    <br>
+    <button class="back-btn" onclick="window.location.href='class10.html'">← Class 10 Hub এ ফিরে যাও</button>
+  </div>
+
+</div>
+
+<script>
+const questions = [{"q": "আধুনিক ইতিহাসচর্চায় 'অ্যানাল' (Annales) পত্রিকা কবে প্রকাশিত হয়?", "opts": ["১৯২০ খ্রিস্টাব্দে", "১৯২৯ খ্রিস্টাব্দে", "১৯৬০ খ্রিস্টাব্দে", "১৯৭০ খ্রিস্টাব্দে"], "ans": 1, "exp": "ফরাসি ঐতিহাসিক মার্ক ব্লখ, লুসিয়েন ফেবর, ফার্নান্দ ব্রদেল প্রমুখ ১৯২৯ খ্রিস্টাব্দে 'অ্যানাল' পত্রিকা প্রকাশের মধ্য দিয়ে সামাজিক ইতিহাসচর্চার সূত্রপাত ঘটিয়েছিলেন।"}, {"q": "ভারতে নিম্নবর্গের ইতিহাসচর্চা (Subaltern Studies) কবে শুরু হয়?", "opts": ["১৯৬০ খ্রিস্টাব্দে", "১৯৭০ খ্রিস্টাব্দে", "১৯৮২ খ্রিস্টাব্দে", "১৯৮৮ খ্রিস্টাব্দে"], "ans": 2, "exp": "অধ্যাপক রণজিৎ গুহ রচিত 'সাবল্টার্ন স্টাডিজ'-এর প্রথম খণ্ড ১৯৮২ খ্রিস্টাব্দে প্রকাশের দ্বারা ভারতে নিম্নবর্গের ইতিহাসচর্চা শুরু হয়।"}, {"q": "\"নিম্নবর্গের মানুষ নিজেদের কথা নিজেদের মতো করে বলতে পারে না\"— উক্তিটি কার?", "opts": ["রণজিৎ গুহ", "গায়ত্রী স্পিভাক", "পার্থ চট্টোপাধ্যায়", "গৌতম ভদ্র"], "ans": 1, "exp": "নিম্নবর্গের ইতিহাসচর্চার কাঠিন্য বোঝাতে গিয়ে প্রখ্যাত ঐতিহাসিক ও চিন্তাবিদ গায়ত্রী স্পিভাক এই মন্তব্যটি করেছিলেন।"}, {"q": "'ব্রিটিশ সোসাইটি অফ স্পোর্টস হিস্ট্রি' কবে প্রতিষ্ঠিত হয়?", "opts": ["১৯৭০ খ্রিস্টাব্দে", "১৯৭৪ খ্রিস্টাব্দে", "১৯৭৬ খ্রিস্টাব্দে", "১৯৮২ খ্রিস্টাব্দে"], "ans": 3, "exp": "খেলাধুলার ইতিহাস নিয়ে সাংগঠনিকভাবে চর্চা করার উদ্দেশ্যে ইউরোপে ১৯৮২ খ্রিস্টাব্দে এই সংস্থাটি প্রতিষ্ঠিত হয়েছিল।"}, {"q": "ভারতে খেলার ইতিহাস নিয়ে প্রথম কে গবেষণা করেন?", "opts": ["রামচন্দ্র গুহ", "বোরিয়া মজুমদার", "সৌমেন মিত্র", "কৌশিক বন্দ্যোপাধ্যায়"], "ans": 2, "exp": "১৯৮৮ খ্রিস্টাব্দে সৌমেন মিত্র 'ঔপনিবেশিক বাংলায় ফুটবল, জাতীয়তাবাদ, সাম্প্রদায়িকতা ও উগ্রপ্রাদেশিকতা' নামক গবেষণার মাধ্যমে ভারতে প্রথম খেলার ইতিহাস নিয়ে কাজ শুরু করেন।"}, {"q": "মোহনবাগান ক্লাব কবে আই.এফ.এ (IFA) শিল্ড জয় করেছিল?", "opts": ["১৮৮৯ খ্রিস্টাব্দে", "১৮৯৬ খ্রিস্টাব্দে", "১৯১১ খ্রিস্টাব্দে", "১৯২০ খ্রিস্টাব্দে"], "ans": 2, "exp": "১৯১১ খ্রিস্টাব্দে মোহনবাগান ইংরেজদের ইস্ট ইয়র্ক ক্লাবকে হারিয়ে আই.এফ.এ শিল্ড জিতেছিল, যা পরাধীন ভারতে দেশবিজয়ের মতো জাতীয়তাবোধের সঞ্চার করেছিল।"}, {"q": "'খেলা যখন ইতিহাস' গ্রন্থটি কার লেখা?", "opts": ["রামচন্দ্র গুহ", "বোরিয়া মজুমদার", "রিচার্ড হোল্ট", "কৌশিক বন্দ্যোপাধ্যায়"], "ans": 3, "exp": "তরুণ ঐতিহাসিক কৌশিক বন্দ্যোপাধ্যায় ভারতের ইতিহাসচর্চায় খেলাধুলার প্রভাব ও জাতীয়তাবাদ নিয়ে এই গ্রন্থটি রচনা করেছেন।"}, {"q": "প্রাচীন গ্রিসের অলিম্পিয়াতে প্রথম অলিম্পিক গেমস কবে চালু হয়েছিল?", "opts": ["৭৭৬ খ্রিস্টপূর্বাব্দে", "৪৮০ খ্রিস্টপূর্বাব্দে", "১৮৯৬ খ্রিস্টাব্দে", "১৯১১ খ্রিস্টাব্দে"], "ans": 0, "exp": "প্রাচীন যুগ থেকেই বিশ্বে খেলাকে গুরুত্ব দেওয়া হতো এবং প্রাচীন গ্রিসের অলিম্পিয়াতে প্রথম অলিম্পিক গেমস চালু হয়েছিল ৭৭৬ খ্রিস্টপূর্বাব্দে।"}, {"q": "আধুনিক ইতিহাসচর্চায় 'তলা থেকে ইতিহাস' (History from below) পদ্ধতি কোন্ ইতিহাস রচনায় ব্যবহৃত হয়?", "opts": ["সামরিক ইতিহাস", "নতুন সামাজিক ইতিহাস", "খেলার ইতিহাস", "শহরের ইতিহাস"], "ans": 1, "exp": "নতুন সামাজিক ইতিহাসে সমাজের উচ্চ-নীচ সব শ্রেণির সাধারণ মানুষের কথা লেখা হয় বলে এই ইতিহাস রচনার ক্ষেত্রে 'History from below' পদ্ধতি ব্যবহার করা হয়।"}, {"q": "ভারতে কাঁচা লঙ্কা ও আলুর ব্যবহার কাদের প্রভাবে শুরু হয়েছিল?", "opts": ["ইংরেজ", "ফরাসি", "পোর্তুগিজ", "ওলন্দাজ"], "ans": 2, "exp": "খাদ্যাভ্যাসের ইতিহাস থেকে জানা যায় যে, ভারতে পোর্তুগিজ উপনিবেশ স্থাপনের পর তাদের দ্বারা প্রভাবিত হয়ে এ দেশে কাঁচা লঙ্কা ও আলুর ব্যবহার শুরু হয়।"}, {"q": "স্কটল্যান্ডের প্রভাবে ভারতীয়দের খাদ্য তালিকায় কোন্ খাবারটি যুক্ত হয়েছে?", "opts": ["আলু", "কাঁচা লঙ্কা", "ওটস্", "কেক"], "ans": 2, "exp": "'কেকের দেশ' নামে পরিচিত স্কটল্যান্ডের প্রভাবেই ভারতীয়দের খাদ্য তালিকায় ওটস্ যুক্ত হয়েছিল।"}, {"q": "স্বদেশি যুগে ব্রিটিশ সাম্রাজ্যবাদের বিরুদ্ধে হাতিয়ার হিসেবে কোন্ খাদ্যদ্রব্যটি বর্জন করা হয়েছিল?", "opts": ["চা", "সাদা চিনি", "লবণ", "কফি"], "ans": 1, "exp": "স্বদেশি যুগে ব্রিটিশ কলে প্রস্তুত সাদা চিনির মতো কিছু বিশেষ খাদ্যদ্রব্য বর্জন করা হয়েছিল, যা খাদ্যকে সাম্রাজ্যবাদের বিরুদ্ধে হাতিয়ার করে তুলেছিল।"}, {"q": "'হাউ টু মেক এ ন্যাশনাল কুইজিন' প্রবন্ধটি কে রচনা করেছেন?", "opts": ["জে. গ্র্যামিলিয়ন", "তপন রায়চৌধুরী", "অর্জুন আপ্পাদুরাই", "রামচন্দ্র গুহ"], "ans": 2, "exp": "খাদ্যাভ্যাসের বিবর্তন ও তার ইতিহাস সম্পর্কে জানার জন্য অর্জুন আপ্পাদুরাই এই উল্লেখযোগ্য প্রবন্ধটি রচনা করেছেন।"}, {"q": "'অ্যাপেটাইটস: ফুডস ইন প্রি-হিস্ট্রি' গ্রন্থটি কার লেখা?", "opts": ["জে. গ্র্যামিলিয়ন", "তপন রায়চৌধুরী", "ইরফান হাবিব", "আলফ্রেড ক্রসবি"], "ans": 0, "exp": "প্রাগৈতিহাসিক যুগের মানুষের খাদ্যাভ্যাস এবং তার ঐতিহাসিক বিবর্তনের ওপর ভিত্তি করে জে. গ্র্যামিলিয়ন এই গ্রন্থটি রচনা করেছেন।"}, {"q": "'দ্য পিকাডর বুক অফ ক্রিকেট' গ্রন্থের রচয়িতা কে?", "opts": ["বোরিয়া মজুমদার", "রামচন্দ্র গুহ", "রিচার্ড হোল্ট", "কৌশিক বন্দ্যোপাধ্যায়"], "ans": 1, "exp": "বিখ্যাত ঐতিহাসিক রামচন্দ্র গুহ ক্রিকেট খেলার বিবর্তন ও ইতিহাস নিয়ে এই বিখ্যাত গ্রন্থটি রচনা করেছেন।"}];
+
+const LABELS = ['ক', 'খ', 'গ', 'ঘ'];
+let cur = 0, score = 0, wrong = 0, answered = false, timerInterval, timeLeft = 20 * 60;
+let userAnswers = [];
+
+function startQuiz() {
+  cur = 0; score = 0; wrong = 0; answered = false;
+  timeLeft = 20 * 60; userAnswers = [];
+  document.getElementById('startScreen').style.display = 'none';
+  document.getElementById('resultWrap').classList.remove('show');
+  document.getElementById('quizArea').style.display = 'block';
+  document.getElementById('timerBox').classList.remove('danger');
+  clearInterval(timerInterval);
+  timerInterval = setInterval(tick, 1000);
+  loadQ();
+}
+
+function tick() {
+  timeLeft--;
+  const m = Math.floor(timeLeft / 60);
+  const s = timeLeft % 60;
+  document.getElementById('timerDisplay').textContent = m + ':' + (s < 10 ? '0' : '') + s;
+  if (timeLeft <= 60) document.getElementById('timerBox').classList.add('danger');
+  if (timeLeft <= 0) { clearInterval(timerInterval); showResult(); }
+}
+
+function loadQ() {
+  answered = false;
+  const q = questions[cur];
+  document.getElementById('qNum').textContent = 'প্রশ্ন ' + (cur + 1) + ' / ' + questions.length;
+  document.getElementById('qText').textContent = q.q;
+  document.getElementById('progressFill').style.width = ((cur + 1) / questions.length * 100) + '%';
+  document.getElementById('nextBtn').disabled = true;
+  document.getElementById('nextBtn').textContent = cur === questions.length - 1 ? 'ফলাফল দেখো' : 'পরবর্তী →';
+  document.getElementById('explanation').classList.remove('show');
+
+  const opts = document.getElementById('qOpts');
+  opts.innerHTML = '';
+  q.opts.forEach((o, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'opt';
+    btn.innerHTML = '<div class="opt-circle">' + LABELS[i] + '</div><div class="opt-text">' + o + '</div>';
+    btn.onclick = () => answer(i);
+    opts.appendChild(btn);
+  });
+}
+
+function answer(i) {
+  if (answered) return;
+  answered = true;
+  const q = questions[cur];
+  userAnswers[cur] = i;
+  const btns = document.querySelectorAll('.opt');
+  btns.forEach(b => b.classList.add('disabled'));
+  btns[q.ans].classList.add('correct');
+  if (i !== q.ans) { btns[i].classList.add('wrong'); wrong++; }
+  else score++;
+  document.getElementById('scoreShow').textContent = 'সঠিক: ' + score + ' | ভুল: ' + wrong;
+  document.getElementById('explanationText').innerHTML = '<strong>ব্যাখ্যা:</strong> ' + q.exp;
+  document.getElementById('explanation').classList.add('show');
+  document.getElementById('nextBtn').disabled = false;
+}
+
+function nextQ() {
+  cur++;
+  if (cur >= questions.length) { clearInterval(timerInterval); showResult(); return; }
+  loadQ();
+}
+
+function showResult() {
+  document.getElementById('quizArea').style.display = 'none';
+  const rw = document.getElementById('resultWrap');
+  rw.classList.add('show');
+  const pct = Math.round(score / questions.length * 100);
+  document.getElementById('finalScore').textContent = score;
+  document.getElementById('rbCorrect').textContent = score;
+  document.getElementById('rbWrong').textContent = wrong;
+  document.getElementById('rbPct').textContent = pct + '%';
+  const grades = [
+    [90, '🌟', 'অসাধারণ! তুমি এই chapter এ দুর্দান্ত!'],
+    [70, '👍', 'খুব ভালো! আরও একটু practice করো।'],
+    [50, '📚', 'ভালো চেষ্টা! পরের Set দিয়ে আরও practice করো।'],
+    [0, '💪', 'চেষ্টা চালিয়ে যাও! Notes পড়ে আবার দাও।']
+  ];
+  const g = grades.find(x => pct >= x[0]);
+  document.getElementById('resultIcon').textContent = g[1];
+  document.getElementById('resultGrade').textContent = g[2];
+}
+
+function showReview() {
+  document.getElementById('resultWrap').classList.remove('show');
+  document.getElementById('quizArea').style.display = 'block';
+  cur = 0;
+  loadReview();
+}
+
+function loadReview() {
+  if (cur >= questions.length) { document.getElementById('quizArea').style.display = 'none'; document.getElementById('resultWrap').classList.add('show'); return; }
+  const q = questions[cur];
+  document.getElementById('qNum').textContent = 'Review — প্রশ্ন ' + (cur + 1) + ' / ' + questions.length;
+  document.getElementById('qText').textContent = q.q;
+  document.getElementById('progressFill').style.width = ((cur + 1) / questions.length * 100) + '%';
+  document.getElementById('nextBtn').disabled = false;
+  document.getElementById('nextBtn').textContent = cur === questions.length - 1 ? 'শেষ করো' : 'পরবর্তী →';
+  document.getElementById('nextBtn').onclick = () => { cur++; loadReview(); };
+
+  const opts = document.getElementById('qOpts');
+  opts.innerHTML = '';
+  q.opts.forEach((o, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'opt disabled';
+    if (i === q.ans) btn.classList.add('correct');
+    else if (userAnswers[cur] === i) btn.classList.add('wrong');
+    btn.innerHTML = '<div class="opt-circle">' + LABELS[i] + '</div><div class="opt-text">' + o + '</div>';
+    opts.appendChild(btn);
+  });
+
+  document.getElementById('explanationText').innerHTML = '<strong>ব্যাখ্যা:</strong> ' + q.exp;
+  document.getElementById('explanation').classList.add('show');
+  document.getElementById('scoreShow').textContent = 'সবুজ = সঠিক উত্তর';
+}
+</script>
+</body>
+</html>
